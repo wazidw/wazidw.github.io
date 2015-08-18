@@ -1,0 +1,252 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>awk分析日志常用命令及使用 | WAZI</title>
+  <meta name="author" content="wazi">
+  
+  <meta name="description" content="渴望行走，渴望远方，渴望用双足丈量大地的经纬">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="awk分析日志常用命令及使用"/>
+  <meta property="og:site_name" content="WAZI"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="WAZI" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="/js/jquery.min.js"></script>
+  
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-45019001-1', 'topdna.org');
+  ga('send', 'pageview');
+
+</script>
+
+
+</head>
+
+
+<body>
+  <!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://storage.ie6countdown.com/assets/100/images/banners/warning_bar_0027_Simplified Chinese.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">WAZI</a></h1>
+  <h2><a href="/">渴望行走，渴望远方，渴望用双足丈量大地的经纬</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="my">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <time datetime="2015-08-18T16:08:59.000Z"><a href="/2015/08/19/awk分析日志常用命令及使用/">2015-08-19</a></time>
+      
+      
+  
+    <h1 class="title">awk分析日志常用命令及使用</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="常用命令">常用命令</h2><p>1、统计服务器返回状态码</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk '&#123;<span class="keyword">print</span> <span class="label">$9&#125;</span>' access.<span class="keyword">log</span> | <span class="keyword">sort</span> | uniq -c | <span class="keyword">sort</span></span><br></pre></td></tr></table></figure>
+<p>2、发生500错误的请求url 列表</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk '(<span class="label">$9</span> ~ /500/)' access.<span class="keyword">log</span> | awk '&#123;<span class="keyword">print</span> <span class="label">$7&#125;</span>' | <span class="keyword">sort</span> | uniq -c | <span class="keyword">sort</span> -<span class="literal">r</span></span><br></pre></td></tr></table></figure>
+<p>3、前20个访问最高的url 列表</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk  -F\" '&#123;<span class="keyword">print</span> <span class="label">$2&#125;</span>' access.<span class="keyword">log</span> | awk '&#123;<span class="keyword">print</span> <span class="label">$2&#125;</span> data' | <span class="keyword">sort</span> | uniq -c | <span class="keyword">sort</span> -nr | head -<span class="keyword">n</span> 20</span><br></pre></td></tr></table></figure>
+<h2 id="使用说明">使用说明</h2><h3 id="combined格式">combined格式</h3><figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LogFormat <span class="string">"<span class="variable">%h</span> <span class="variable">%l</span> <span class="variable">%u</span> <span class="variable">%t</span> \"<span class="variable">%r</span>\" <span class="variable">%&gt;</span>s <span class="variable">%b</span> \"<span class="variable">%&#123;Referer&#125;</span>i\" \"%&#123;User-Agent&#125;i\""</span> combined</span><br></pre></td></tr></table></figure>
+<p>说明</p>
+<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">%<span class="title">h</span></span> = 发起请求的客户端 IP 地址。这里记录的 IP 地址并不一定是真实用户客户机的 IP 地址，它可能是私网客户端的公网映射地址或代理服务器地址。</span><br><span class="line"><span class="tag">%<span class="title">l</span></span> = 客户机的 RFC 1413 标识 ( 参考 ) ，只有实现了 RFC 1413 规范的客户端，才能提供此信息。</span><br><span class="line"><span class="tag">%<span class="title">u</span></span> = 访问用户的 ID</span><br><span class="line"><span class="tag">%<span class="title">t</span></span> = 收到请求的时间</span><br><span class="line"><span class="tag">%<span class="title">r</span></span> = 来自客户端的请求行</span><br><span class="line"><span class="tag">%</span>&gt;s = 服务器返回客户端的状态码</span><br><span class="line"><span class="tag">%<span class="title">b</span></span> = 返回给客户端的字节大小，但不包括响应头的大小</span><br><span class="line"><span class="tag">%&#123;Referer&#125;<span class="title">i</span></span> = 引用页</span><br><span class="line"><span class="tag">%&#123;User-Agent&#125;<span class="title">i</span></span> = 浏览器的类型</span><br></pre></td></tr></table></figure>
+<h3 id="分隔信息">分隔信息</h3><p>默认含义</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">awk</span> <span class="string">'&#123;print <span class="variable">$1</span>&#125;'</span> access.log       <span class="comment"># IP 地址  (%h) </span></span><br><span class="line">awk <span class="string">'&#123;print <span class="variable">$2</span>&#125;'</span> access.log       <span class="comment"># RFC 1413 标识  (%l) </span></span><br><span class="line">awk <span class="string">'&#123;print <span class="variable">$3</span>&#125;'</span> access.log       <span class="comment"># 用户 ID  (%u) </span></span><br><span class="line">awk <span class="string">'&#123;print <span class="variable">$4</span>,<span class="variable">$5</span>&#125;'</span> access.log     <span class="comment"># 日期和时间  (%t) </span></span><br><span class="line">awk <span class="string">'&#123;print <span class="variable">$7</span>&#125;'</span> access _log      <span class="comment">#  URI (%&gt;s) </span></span><br><span class="line">awk <span class="string">'&#123;print <span class="variable">$9</span>&#125;'</span> access _log      <span class="comment"># 状态码 (%&gt;s) </span></span><br><span class="line">awk <span class="string">'&#123;print <span class="variable">$10</span>&#125;'</span> access _log     <span class="comment"># 响应大小  (%b)</span></span><br></pre></td></tr></table></figure>
+<p>分隔符 “”</p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">awk -F<span class="string">\"</span> <span class="string">'&#123;print $2&#125;'</span> access.log        <span class="comment"># 请求行 (%r) </span></span><br><span class="line">awk -F<span class="string">\"</span> <span class="string">'&#123;print $4&#125;'</span> access.log        <span class="comment"># 引用页 </span></span><br><span class="line">awk -F<span class="string">\"</span> <span class="string">'&#123;print $6&#125;'</span> access.log        <span class="comment"># 浏览器</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+      
+
+        
+        
+          <div class="alignright post-nav">
+            <em>下一篇: </em><a href="/2015/08/18/mysql报错问题集/">mysql报错问题集</a>
+          </div>
+          <div class="clearfix"></div>
+        
+
+        
+          <div class="copyright">
+            
+              <span class="claim">2015 @ wazi</span>
+            
+            
+              <span class="from-link">
+                <em>本文链接地址:</em>
+                <a href="/2015/08/19/awk分析日志常用命令及使用/">
+                  http://wazidw.github.io/2015/08/19/awk分析日志常用命令及使用/
+                </a>
+              </span>
+            
+          </div>
+        
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/awk/">awk</a>, <a href="/tags/log/">log</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_sinaweibo_like"></a>
+    
+    
+      <a class="addthis_button_linkedin"></a>
+    
+    
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="text" name="q" results="0" placeholder="搜一下">
+    <i class="icon-search"></i>
+    <input type="hidden" name="q" value="site:wazidw.github.io">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Git/">Git</a><small>1</small></li>
+  
+    <li><a href="/tags/Homebrew/">Homebrew</a><small>1</small></li>
+  
+    <li><a href="/tags/Mac/">Mac</a><small>1</small></li>
+  
+    <li><a href="/tags/Sublime/">Sublime</a><small>1</small></li>
+  
+    <li><a href="/tags/awk/">awk</a><small>1</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/iTerm2/">iTerm2</a><small>1</small></li>
+  
+    <li><a href="/tags/log/">log</a><small>1</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2015/08/19/awk分析日志常用命令及使用/">awk分析日志常用命令及使用</a>
+      </li>
+    
+      <li>
+        <a href="/2015/08/18/mysql报错问题集/">mysql报错问题集</a>
+      </li>
+    
+      <li>
+        <a href="/2015/08/01/MAC开发工具/">MAC开发工具</a>
+      </li>
+    
+      <li>
+        <a href="/2015/07/10/Github-搭建Hexo/">Github 搭建Hexo</a>
+      </li>
+    
+      <li>
+        <a href="/2015/07/10/hello-world/">Hello World</a>
+      </li>
+    
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <div id="go-pg-top"><i class="icon-arrow-up"></i></div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 wazi
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/page.js"></script>
+
+</body>
+
+</html>
