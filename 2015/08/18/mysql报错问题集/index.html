@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>hexo | WAZI</title>
+  <title>mysql报错问题集 | WAZI</title>
   <meta name="author" content="wazi">
   
   <meta name="description" content="渴望行走，渴望远方，渴望用双足丈量大地的经纬">
@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  
+  <meta property="og:title" content="mysql报错问题集"/>
   <meta property="og:site_name" content="WAZI"/>
 
   
@@ -60,24 +60,101 @@
 </nav>
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
-    <div id="main-col" class="alignleft"><div id="wrapper">
-<h2 class="archive-title tag">hexo</h2>
-
-
-  <div class="archive">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="my">
+  
+    <div class="gallery">
+  <div class="photoset">
     
-      <article class="github_instal_hexo">
-        <div class="post-content">
-          <header>
-            <time datetime="2015-07-10T11:28:11.000Z"><a href="/2015/07/10/Github-搭建Hexo/">2015-07-10</a></time>
-            
-              <h1 class="title"><a href="/2015/07/10/Github-搭建Hexo/">Github 搭建Hexo</a></h1>
-            
-          </header>
-        </div>
-      </article>
+      <img src="">
     
   </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <time datetime="2015-08-18T15:30:24.000Z"><a href="/2015/08/18/mysql报错问题集/">2015-08-18</a></time>
+      
+      
+  
+    <h1 class="title">mysql报错问题集</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h3 id="1、warning_the_/usr/local/mysql/data_directory_is_not_owned_by_the_‘mysql’_or_‘_mysql’_user">1、warning the /usr/local/mysql/data directory is not owned by the ‘mysql’ or ‘_mysql’ user</h3><p>解决：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo <span class="regexp">/usr/</span>local<span class="regexp">/mysql/</span>support-files/mysql.server start</span><br><span class="line">Starting MySQL</span><br><span class="line">. ERROR! The server quit without updating PID file (<span class="regexp">/usr/</span>local<span class="regexp">/mysql/</span>data/musikid-pro-wujin.lan.pid).</span><br><span class="line">$ sudo chown -R <span class="string">mysql:</span>mysql <span class="regexp">/usr/</span>local<span class="regexp">/mysql/</span>data</span><br></pre></td></tr></table></figure>
+<p>参考资料：</p>
+<p><a href="http://stackoverflow.com/questions/24697558/cant-start-mysql-on-mavericks" target="_blank" rel="external">http://stackoverflow.com/questions/24697558/cant-start-mysql-on-mavericks</a></p>
+<p><a href="http://my.oschina.net/leegq/blog/184400" target="_blank" rel="external">http://my.oschina.net/leegq/blog/184400</a></p>
+<p><a href="http://stackoverflow.com/questions/5527676/warning-the-user-local-mysql-data-directory-is-not-owned-by-the-mysql-user" target="_blank" rel="external">http://stackoverflow.com/questions/5527676/warning-the-user-local-mysql-data-directory-is-not-owned-by-the-mysql-user</a></p>
+
+      
+    </div>
+    <footer>
+      
+
+        
+        
+          <div class="alignright post-nav">
+            <em>下一篇: </em><a href="/2015/08/01/MAC开发工具/">MAC开发工具</a>
+          </div>
+          <div class="clearfix"></div>
+        
+
+        
+          <div class="copyright">
+            
+              <span class="claim">2015 @ wazi</span>
+            
+            
+              <span class="from-link">
+                <em>本文链接地址:</em>
+                <a href="/2015/08/18/mysql报错问题集/">
+                  http://wazidw.github.io/2015/08/18/mysql报错问题集/
+                </a>
+              </span>
+            
+          </div>
+        
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/mysql/">mysql</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_sinaweibo_like"></a>
+    
+    
+      <a class="addthis_button_linkedin"></a>
+    
+    
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
 </div></div>
     <aside id="sidebar" class="alignright">
   <div class="search">
