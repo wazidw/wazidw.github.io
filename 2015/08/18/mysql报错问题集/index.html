@@ -89,6 +89,7 @@
       
         <h3 id="1、warning_the_/usr/local/mysql/data_directory_is_not_owned_by_the_‘mysql’_or_‘_mysql’_user">1、warning the /usr/local/mysql/data directory is not owned by the ‘mysql’ or ‘_mysql’ user</h3><p>解决：</p>
 <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ sudo <span class="regexp">/usr/</span>local<span class="regexp">/mysql/</span>support-files/mysql.server start</span><br><span class="line"></span><br><span class="line">Starting MySQL</span><br><span class="line">. ERROR! </span><br><span class="line">The server quit without updating PID file (<span class="regexp">/usr/</span>local<span class="regexp">/mysql/</span>data/X.lan.pid).</span><br><span class="line"></span><br><span class="line">$ sudo chown -R <span class="string">mysql:</span>mysql <span class="regexp">/usr/</span>local<span class="regexp">/mysql/</span>data</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <p>参考资料：</p>
 <p><a href="http://stackoverflow.com/questions/24697558/cant-start-mysql-on-mavericks" target="_blank" rel="external">http://stackoverflow.com/questions/24697558/cant-start-mysql-on-mavericks</a></p>
 <p><a href="http://my.oschina.net/leegq/blog/184400" target="_blank" rel="external">http://my.oschina.net/leegq/blog/184400</a></p>
